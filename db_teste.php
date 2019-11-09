@@ -54,6 +54,11 @@ if (!$con->connect_errno){
         echo "<p> Foram encontrados: $res->num_rows registros</p>";
     }
     echo "<hr>";
+
+
+
+
+
     //bind_param e bind_result
 //Novas Formas de Passar parâmetros dentro do SQL
     $sql = "SELECT nome, idade FROM aluno WHERE cidade like ? and idade > ?";
@@ -80,7 +85,9 @@ if (!$con->connect_errno){
     }else{
         echo "Deu ruim";
     }
-    
+
+
+    //Inserção com Parâmetros
     $sql = "INSERT INTO aluno (nome, idade, cidade) VALUES (?,?,?)";
     $stmt = $con->prepare($sql);
     if($stmt){

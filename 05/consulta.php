@@ -17,7 +17,11 @@ if(!$con->connect_errno){
             $res = $stmt->store_result();
             echo "<ul>";
             while($stmt->fetch()){
-                echo "<li>ID: $id - Nome: $nome</li>";
+                echo "<li>";
+                echo "ID: $id - Nome: $nome";
+                //$link = "editar.php?id_disciplina=$id&nome=$nome";
+                //echo "<a href=\"$link\"> - Editar </a>";
+                echo "</li>";
             }
             echo "</ul>";
         }
