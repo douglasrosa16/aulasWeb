@@ -26,11 +26,11 @@ if(!$con->connect_errno){
         if($stmt->execute()){
             $stmt->bind_result($id, $nome);
             $res = $stmt->store_result();
-            echo "<ul>";
-            while($stmt->fetch()){
-                echo "<li>ID: $id - Nome: $nome</li>";
-            }
-            echo "</ul>";
+            // echo "<ul>";
+            // while($stmt->fetch()){
+            //     echo "<li>ID: $id - Nome: $nome</li>";
+            // }
+            // echo "</ul>";
         }
         $stmt->close();
     }

@@ -69,7 +69,7 @@ if (!$con->connect_errno){
     if ($stmt){
         $stmt->bind_param("si", $cidade, $idade); //Passar os tipos dos parâmetros
         $stmt->execute();
-        $stmt->bind_result($res_nome, $res_idade);
+        $stmt->bind_result($res_nome, $res_idade);//Passa as outras colunas
         $res = $stmt->store_result();
 
         if($stmt->num_rows > 0){
