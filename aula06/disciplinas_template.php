@@ -16,11 +16,18 @@
     }
 
     //Deletar uma nova disciplina
-    if(count($_POST) && isset($_POST['apagar']) == true){
-        $d = new Disciplina($_POST['id_disciplina'], null);    
+    if(count($_GET) && (isset($_GET['id_disciplina']))){
+        $d = new Disciplina($_GET['id_disciplina'], null);    
         $dao->apagar($d);
     }
 
+    //Atualizar uma disciplina
+    if(count($_GET) && (isset($_GET['id']))){
+        $disciplina = $dao->buscarDisciplina($_GET['id']);
+       // $nome = $disciplina->getNome();
+       $nome = "Web";
+       $dao->update($disciplina, $nome);
+    }
     $disciplinas = $dao->getDisciplinas(); //Imprimir todas as disciplinas
     
     }else{
@@ -80,17 +87,12 @@
                     <th scope="row"><?php echo $d->getId();?></th>
                     <td><?php echo $d->getNome();?></td>
                     <td>
-                        <a class="btn btn-danger btn-sm active" 
-                           <?php 
-                                $id = $d->getId();
-                                $link = "disciplinas_template.php?apagar=true&id_disciplina=$id";
-                                echo "href=\"$link\""; 
-                            ?> 
-                            >
+                        <a class="btn btn-danger btn-sm active"
+                           href="disciplinas_template.php?&id_disciplina=<?php echo $d->getId(); ?>">
                             Apagar
                         </a>
                         <a class="btn btn-secondary btn-sm active" 
-                            href="">
+                           href="disciplinas_template.php?&id=<?php echo $d->getId();?>?nome=<?php echo $d->getNome() ?>">
                             Editar
                         </a>                        
                     </td>
