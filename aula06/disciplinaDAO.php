@@ -31,6 +31,27 @@
       return [];
     }
 
+    //Buscar uma Disciplina Específica
+    public function buscarDisciplina($id){
+      if($this->con->isConnected()){
+        $sql = "SELECT id_disciplina, nome FROM disciplina WHERE id_disciplina = ?";
+        $stmt = $this->con->prepare($sql);
+        if($stmt){
+          if ($stmt->execute()){
+            $stmt->bind_result($id_disciplina, $nome);
+            $stmt->store_result();
+            $disciplina = new Disciplina($id, $nome);
+            $stmt->close();
+            return $disciplina;
+          }          
+        }else{
+          echo "Não foi possível executar esse comando";
+        }
+      }else{
+        echo "Você não está conectado!";
+      }
+    }
+
     //Inserir novas disciplinas
     public function inserir(Disciplina $d) {
       if ($this->con->isConnected()) {
@@ -54,7 +75,7 @@
     //Apagar disciplinas
     public function apagar(Disciplina $d){
       if($this->con->isConnected()){
-        $sql = "DELETE FROM disciplina WHERE ?";
+        $sql = "DELETE FROM disciplina WHERE id_disciplina = ?";
         $stmt = $this->con->prepare($sql);
         $id = $d->getId();
         if($stmt){
@@ -68,6 +89,23 @@
         header("Location: disciplinas_template.php");
       }else{
         echo "Você não está conectado!";
+      }
+    }
+
+    public function update(Disciplina $d, $Varnome){
+      if($this->con->isConnected()){
+        $sql = "UPDATE disciplina SET nome = ? WHERE id_disciplina = ?";
+        $stmt = $this->con->prepare($sql);
+        if($stmt){
+          $stmt->bind_param('ss', $d->getId(),$Varnome);
+          $stmt->execute();
+          $stmt->close();
+        }else{
+          $stmt->close();
+        }
+        header("Location: disciplinas_template.php");
+      }else{
+        echo "Erro ao conectar";
       }
     }
   }
