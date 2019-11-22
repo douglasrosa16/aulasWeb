@@ -5,28 +5,36 @@
   require_once('disciplinaDAO.php');
 
   $db = new Db("localhost", "root", "", "alunos");
-
+  $editarIdDisciplina =null;
+  $editarNomeDisciplina = null;
   if ($db->connect()) {
     $dao = new DisciplinaDAO($db);
     
-    //Inserir uma nova disciplina
-    if(count($_POST) && isset($_POST['nome'])){ //Verificar se existe conteúdo dentro
-        $d = new Disciplina(null, $_POST['nome']);
-        $dao->inserir($d);
+    //Verifica se existe um ID, caso exista vai editar, se não existir vai inserir
+    if(count($_POST) && isset($_POST['nome'])){ 
+        if(isset($_POST['idDisciplina']) && $_POST['idDisciplina'] != ""){
+            //Atualizar Disciplina
+            $disciplina = $dao->buscarDisciplina($_POST['idDisciplina']);
+            $disciplina->setNome($_POST['nome']);
+            $dao->update($disciplina);
+        }else{
+            //Inserir uma nova disciplina
+            $d = new Disciplina(null, $_POST['nome']);
+            $dao->inserir($d);
+        }        
     }
 
     //Deletar uma nova disciplina
-    if(count($_GET) && (isset($_GET['id_disciplina']))){
-        $d = new Disciplina($_GET['id_disciplina'], null);    
-        $dao->apagar($d);
-    }
-
-    //Atualizar uma disciplina
-    if(count($_GET) && (isset($_GET['id']))){
-        $disciplina = $dao->buscarDisciplina($_GET['id']);
-       // $nome = $disciplina->getNome();
-       $nome = "Web";
-       $dao->update($disciplina, $nome);
+    if(count($_GET) && (isset($_GET['op'])) && (isset($_GET['id'])) && $_GET['id']!="" ){
+        $op = $_GET['op'];
+        $id = $_GET['id'];
+        $disciplina = $dao->buscarDisciplina($id);
+        if ($op == "apagar"){
+            $dao->apagar($disciplina);
+        }else if($op = "editar"){
+            $editarIdDisciplina = $disciplina->getId();
+            $editarNomeDisciplina = $disciplina->getNome();
+        }
     }
     $disciplinas = $dao->getDisciplinas(); //Imprimir todas as disciplinas
     
@@ -59,10 +67,10 @@
                     method="POST">
                     <div class="input-group">
                         <input type="hidden" name="idDisciplina" 
-                            value="">
+                            value="<?php echo $editarIdDisciplina?>">
                         <input type="text" placeholder="Nome da Disciplina" 
                             class="form-control" name="nome" required
-                            value="">
+                            value="<?php echo $editarNomeDisciplina?>">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-secondary">
                                 Salvar
@@ -81,18 +89,18 @@
                 </thead>
                 <tbody>
 <?php      
-    foreach($disciplinas as $d){ //Imprimir todas as disciplinas
+    foreach($disciplinas as $d){ //Imprimir todas as disciplinas       
 ?>                
                 <tr>
                     <th scope="row"><?php echo $d->getId();?></th>
                     <td><?php echo $d->getNome();?></td>
                     <td>
                         <a class="btn btn-danger btn-sm active"
-                           href="disciplinas_template.php?&id_disciplina=<?php echo $d->getId(); ?>">
+                           href="disciplinas_template.php?op=apagar&id=<?php echo $d->getId(); ?>">
                             Apagar
                         </a>
                         <a class="btn btn-secondary btn-sm active" 
-                           href="disciplinas_template.php?&id=<?php echo $d->getId();?>?nome=<?php echo $d->getNome() ?>">
+                           href="disciplinas_template.php?op=editar&id=<?php echo $d->getId();?>">
                             Editar
                         </a>                        
                     </td>

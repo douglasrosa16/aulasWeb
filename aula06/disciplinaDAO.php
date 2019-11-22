@@ -37,10 +37,15 @@
         $sql = "SELECT id_disciplina, nome FROM disciplina WHERE id_disciplina = ?";
         $stmt = $this->con->prepare($sql);
         if($stmt){
-          if ($stmt->execute()){
+          $stmt->bind_param("i",$id);
+          if ($stmt->execute()){            
             $stmt->bind_result($id_disciplina, $nome);
             $stmt->store_result();
-            $disciplina = new Disciplina($id, $nome);
+            $disciplina = null; //vai retornar ela caso ela seja zero
+            if($stmt->num_rows > 0){
+              $stmt->fetch();
+              $disciplina = new Disciplina($id_disciplina, $nome);
+            }
             $stmt->close();
             return $disciplina;
           }          
@@ -49,6 +54,7 @@
         }
       }else{
         echo "Você não está conectado!";
+        return null;
       }
     }
 
@@ -80,9 +86,10 @@
         $id = $d->getId();
         if($stmt){
           $stmt->bind_param('s',$id);
-          $stmt->execute();
+          $res = $stmt->execute(); //retornar um valor que conseguiu apagar
           $stmt->close();
         }else{
+          return false;
           $stmt->close();
           echo "Ocorreu um erro na Exclusão";
         }
@@ -92,20 +99,26 @@
       }
     }
 
-    public function update(Disciplina $d, $Varnome){
+    public function update(Disciplina $d){
       if($this->con->isConnected()){
         $sql = "UPDATE disciplina SET nome = ? WHERE id_disciplina = ?";
         $stmt = $this->con->prepare($sql);
         if($stmt){
-          $stmt->bind_param('ss', $d->getId(),$Varnome);
-          $stmt->execute();
-          $stmt->close();
+          $nome = $d->getNome();
+          $id = $d->getId();
+          $stmt->bind_param('ss', $nome, $id);
+          if($stmt->execute()){
+            $res = $stmt->execute();
+            $stmt->close();
+            return $res;
+          }         
         }else{
           $stmt->close();
         }
         header("Location: disciplinas_template.php");
       }else{
         echo "Erro ao conectar";
+        return false;
       }
     }
   }
