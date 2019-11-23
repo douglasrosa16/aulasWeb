@@ -6,14 +6,12 @@ Retorne o array como resultado. */
 Class exercicio{
 
     public function removeIguais($arrayString, $nome){
-        foreach($arrayString as $array){
-            if($array == $nome){
-                var_dump($array);
-                unset($array);
+        foreach($arrayString as $indice => $valor){
+            if($valor == $nome){
+                unset($arrayString[$indice]);              
             }
         }
         return $arrayString;
-
     }
 
 
