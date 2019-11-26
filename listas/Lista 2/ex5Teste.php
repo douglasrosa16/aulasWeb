@@ -7,11 +7,12 @@
     $array1 = [1,2,3,4,5,6,7];
     $array2 = [4,2,1,4,5,3,7];
 
-    $array = sort($array1);
-    $array3 = sort($array2);
+    //Ordenando arrays
+    sort($array1);
+    sort($array2);
 
     $teste = new exercicio();
-    $valores = $teste->merge($array, $array3);
+    $valores = $teste->merge($array1, $array2);
     var_dump($valores);
 
 
