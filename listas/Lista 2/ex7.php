@@ -13,6 +13,12 @@ para armazenar o conteúdo. Mostre todos os conteúdos que foram postados anteri
   <title>Document</title>
 </head>
 <body>
-  <form action="ex7Teste.php" method=""></form>
+  <form action="ex7Teste.php" method="POST">
+    Informe seu nome <input type="text" name="nome" placeholder="Informe o nome"></br>
+    Informe sua idade <input type="number" name="idade"></br>
+    Informe o CPF <input type="text" name="cpf"></br>
+    <button type="submit">Enviar</button>
+  </form>
+  <?php  ?>
 </body>
 </html>
