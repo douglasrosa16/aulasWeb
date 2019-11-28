@@ -1,6 +1,7 @@
 <?php
 
   require_once("genitor.php");
+  require_once("filho.php");
 
   class familia{
 
@@ -8,20 +9,21 @@
       private $pai;
       private $mae;
 
-      public function __construct($filhos="", $pai=null, $mae=null){
+      public function __construct($filhos=[], $pai=null, $mae=null){
         $this->filhos = [];
         $this->pai = $pai;  
         $this->mae = $mae;        
       }
 
       public function setFilhos($newFilhos){
-        $this->filhos[] = $newFilhos;
+        $this->filhos = $newFilhos;
       }
 
       public function getFilhos(){
-        foreach($this->filhos as $f){
+        return $this->filhos;
+        /*foreach($this->filhos as $f){
           echo "Filhos: " . $f . "<br>";
-        }
+        }*/
       }
 
       public function setPai(genitor $pai){

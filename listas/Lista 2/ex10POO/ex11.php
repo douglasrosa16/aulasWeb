@@ -87,10 +87,10 @@ que cada família tem um Pai, Mãe e zero ou mais filhos.*/
     $mae2->addFilho($filho3);  //Adriel
             
     //Instanciando Familia
-    $familia = new familia(null, $pai, $mae); //Um objeto familia, vou ter que criar um array de familias
+    $familia = new familia([], $pai, $mae); //Um objeto familia, vou ter que criar um array de familias
     $familia->setFilhos($arrayFilhos);
 
-    $familia2 = new familia(null, $pai2, $mae2);
+    $familia2 = new familia([], $pai2, $mae2);
     
     $arrayFamilias[] = $familia;
     $arrayFamilias[] = $familia2;

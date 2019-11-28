@@ -8,19 +8,15 @@ família: nome do pai, nome da mae, nome e idade de cada filho*/
 
         //Impressão de Array de Familias
         public function imprimirFamilias($arrayFamilias){
-            
+            echo "<pre>";
             foreach($arrayFamilias as $indice => $valor1){
-                echo "<pre>";
-                echo "1º foreach";
-                echo "<br>Indice = ".$indice;
-                foreach($valor1 as $indice2=>$arr){
-                    print_r($arr);
-                    echo "2º foreach";
-                    /*foreach($arr as $agoravai){
-                        print_r($agoravai);
-                        echo "3º foreach";
-                    }*/
+                echo "<pre>";   
+                echo "Mãe: " . ($valor1->getMae()->getNome()) . "<br>";
+                echo "Pai: " . ($valor1->getPai()->getNome()). "<br>";
+                foreach($valor1->getFilhos() as $indice2=>$arr){                                    
+                    echo "Filho: " . $arr->getNome() . "<br>";                   
                 }
+                echo "<hr>";
             }
             echo "</pre>";
         }
