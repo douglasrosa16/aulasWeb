@@ -6,8 +6,8 @@
 
         private $filhos;//Um array de filhos 
 
-        public function __construct($filhos){
-          $this->filhos = []; //declarando array
+        public function __construct($filhos=""){
+          $this->filhos; //declarando array
         }
 
         public function addFilho(filho $f){
@@ -28,6 +28,7 @@
 
         public function setFilhos(filho $f){
           //Setar filhos, pelo o que eu entendi são mais de um (talvez um array?)
+          $this->filhos[] = $f;
         }
 
 
