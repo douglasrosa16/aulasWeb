@@ -8,10 +8,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Departamentos</title>
+    <title>Clientes</title>
   </head>
   <body>
 
+      
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Vendas</a>
         <button class="navbar-toggler" 
@@ -22,10 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="departamentos.php">Departamentos <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="departamentos.php">Departamentos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="clientes.php">Clientes</span></a>
+                    <a class="nav-link active" href="clientes.php">Clientes <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="produtos.php">Produtos </a>
@@ -38,52 +39,71 @@
 
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Cadastro de Departamentos</h2>
+            <h2>Cadastro de Clientes</h2>
         </div>
         <div class="row">
             <div class="col-md-12" >
+                <div class="card p-2 my-4">
+                    <form action="clientes.php" method="POST">
+                        <input type="hidden" name="idCliente" value=""  >
 
-                <form action="departamentos.php" class="card p-2 my-4" 
-                    method="POST">
-                    <div class="input-group">
-                        <input type="hidden" name="idDepartamento" 
-                            value="">
-                        <input type="text" placeholder="Nome da Departamento" 
-                            class="form-control" name="nome" required
-                            value="">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary">
-                                Salvar
-                            </button>
+                        <div class="form-group">
+                            <label for="nome">Nome do Cliente</label>
+                            <input type="text" class="form-control" id="nome"
+                                value="" 
+                                name="nome" placeholder="Nome do Cliente" required>
                         </div>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="endereco">Address</label>
+                            <input type="text" class="form-control" id="endereco" 
+                                value=""
+                                name="endereco" placeholder="Av. Brasil 1500..." required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="telefone">Telefone</label>
+                                <input type="text" class="form-control" id="telefone" 
+                                    value=""
+                                    name="telefone" placeholder="Telefone" required>
+                            </div>                            
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" 
+                                    value=""
+                                    name="email" placeholder="Email" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>                    
+                </div>
 
                 <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                  
                 <tr>
                     <th scope="row">01</th>
-                    <td>Nome do Departamento</td>
+                    <td>Nome do cliente</td>
+                    <td>Email do Cliente</td>
                     <td>
                         <a class="btn btn-danger btn-sm active" 
-                            href="departamentos.php?operacao=apagar&id=id">
+                            href="clientes.php?operacao=apagar&id=id">
                             Apagar
                         </a>
                         <a class="btn btn-secondary btn-sm active" 
-                            href="departamentos.php?operacao=editar&id=id">
+                            href="clientes.php?operacao=editar&id=id">
                             Editar
                         </a>                        
                     </td>
                 </tr>
-                  
+
                 </tbody>
                 </table>
 

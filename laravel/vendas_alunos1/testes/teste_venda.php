@@ -7,15 +7,12 @@
     require_once(__DIR__ . "/../model/produto.php");
     require_once(__DIR__ . "/../dao/produtoDAO.php");
     require_once(__DIR__ . "/../db/db.php"); 
-    require_once(__DIR__ . '/../config/config.php');
-
-    $conn = new Db(Config::db_host,Config::db_user,Config::db_password,Config::db_database);
     
+    $conn = new Db("127.0.0.1","user","user123!@#","vendas");
+
     if ($conn->connect()) {
 
     }
-    
-
     
     
 ?>

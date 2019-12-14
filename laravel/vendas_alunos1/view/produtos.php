@@ -1,3 +1,27 @@
+<?php
+
+    require_once(__DIR__ . "/../db/db.php");
+    require_once(__DIR__ . "/../model/departamento.php");
+    require_once(__DIR__ . "/../dao/departamentoDAO.php");
+    require_once(__DIR__ . "/../model/produto.php");
+    require_once(__DIR__ . "/../dao/produtoDAO.php");
+    require_once(__DIR__ . "/../config/config.php");
+
+    $conn = new Db(Config::db_host,Config::db_user,Config::db_password,Config::db_database);
+    if ($conn->connect()) {
+        $depDAO = new DepartamentoDAO($conn);
+        $prodDAO = new ProdutoDAO($conn);
+        $departamentos = $depDAO->getDepartamentos();
+        $produtos = $prodDAO->getProdutos();
+
+
+    }else{
+        echo "Não foi possível conectar";
+        die();
+    }
+
+
+?>
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -67,10 +91,15 @@
                             <div class="form-group col-md-6">
                                 <label for="departamento">Departamento</label>
                                 <select class="custom-select" required name="departamento">
-                                  <option value="">Selecione um departamento:</option>
-                                  <option value="1">Departamento 1</option>
-                                  <option value="2">Departamento 2</option>
-                                  <option value="3">Departamento 3</option>
+<?php 
+    foreach($departamentos as $dep){
+        $nomeDep = $dep->getNome();
+        $idDep = $dep->getIdDepartamento();
+    
+?> 
+                                  <option value=<?php echo $idDep; ?>><?php echo $nomeDep; ?></option>
+                                
+<?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -90,24 +119,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+<?php 
+    foreach($produtos as $p) {
+        $id = $p->getIdProduto();
+        $nomeProduto = $p->getNome();
+        $precoProduto = $p->getPreco();
+        $nomeDepartamento = $p->getDepartamento()->getNome();
+?>                   
                 <tr>
-                    <th scope="row">01</th>
-                    <td>Nome do Produto</td>
-                    <td>R$ 1.99</td>
-                    <td>Departamento 1</td>
+                    <th scope="row"><?php echo $id; ?></th>
+                    <td> <?php echo $nomeProduto; ?>     </td>
+                    <td> <?php echo $precoProduto; ?>    </td>
+                    <td> <?php echo $nomeDepartamento;?> </td>
                     <td>
                         <a class="btn btn-danger btn-sm active" 
-                            href="produtos.php?operacao=apagar&id=id">
+                            href="produtos.php?operacao=apagar&id=<?php echo $id ?>">
                             Apagar
                         </a>
                         <a class="btn btn-secondary btn-sm active" 
-                            href="produtos.php?operacao=editar&id=id">
+                            href="produtos.php?operacao=editar&id=<?php echo $id ?>">
                             Editar
                         </a>                        
                     </td>
                 </tr>
-
+<?php
+   }
+?>
                 </tbody>
                 </table>
 
