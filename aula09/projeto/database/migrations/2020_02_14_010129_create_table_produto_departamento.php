@@ -19,8 +19,8 @@ class CreateTableProdutoDepartamento extends Migration
             $table->unsignedBigInteger('departamento_id');
 
             //Linkando os campos criados a tabelas referentes
-            $table->foreign('produto_id')->references('id')->on('produtos');
-            $table->foreign('departamento_id')->references('id')->on('departamentos');
+            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
+            $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('cascade');
 
             //Criando as chaves primarias
             $table->primary(['produto_id','departamento_id']);

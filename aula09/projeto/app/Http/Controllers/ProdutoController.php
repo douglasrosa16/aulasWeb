@@ -40,7 +40,7 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->departamentos); //die e debug dd
+        //dd($request->departamentos); //die e debug dd
         $produto = new Produto();
         $produto->nome = $request->nome;
         $produto->estoque = $request->estoque;
@@ -77,8 +77,9 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         $marcas = Marca::all();
+        $departamentos = Departamento::all();
         return view('produtos.edit',
-                    compact(['produto','marcas']));
+                    compact(['produto','marcas','departamentos']));
     }
 
     /**
@@ -95,7 +96,9 @@ class ProdutoController extends Controller
         $produto->marca_id = $request->marca_id;
         $produto->preco = $request->preco;
         $produto->save();
-
+        
+        //Cria os Registros na tabela produto departamento
+        $produto->departamentos()->sync( $request->departamentos );
         return redirect()->route('produtos.index');
     }
 

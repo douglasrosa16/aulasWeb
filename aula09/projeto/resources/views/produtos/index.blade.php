@@ -3,7 +3,7 @@
 @extends('layouts.dashboard');
 
 @section('principal')
-    
+<h1>Cadastrar Produto</h1>    
 <a href="{{ route('produtos.create') }}">
   Novo Cadastrar
 </a>
